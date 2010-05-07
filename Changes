@@ -1,0 +1,9 @@
+Revision history for Ham-Reference-QRZ
+
+0.01    2008-08-10 Sun
+        First version.
+
+0.02    2009-10-31 Sat
+        Added code to convert the iso8859-1 XML encoding declaration to iso-8859-1 from the server,
+        which fixes an error that it was causing in XML::Parser.  (reported by Harry Bloomberg W3YJ)
+
