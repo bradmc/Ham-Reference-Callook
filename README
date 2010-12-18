@@ -43,6 +43,10 @@ SYNOPSIS
      print "Lookups in current 24 hour period: $session->{Count}\n";
      print "QRZ subscription expiration: $session->{SubExp}\n";
 
+     # show the ARRL section
+     my $arrl_section = $qrz->get_arrl_section;
+     print "ARRL Section: $arrl_section\n";
+
 DESCRIPTION
     The "Ham::Reference::QRZ" module provides an easy object oriented front
     end to access Amateur Radio callsign data from the QRZ.COM online
@@ -157,6 +161,14 @@ METHODS
                 this will just return that data.  call a new set_callsign() if you need to refresh
                 the data with a new call to the qrz database.
 
+  get_arrl_section()
+     Usage    : $scalar = $qrz->get_arrl_section;
+     Function : returns ARRL Section information for a callsign
+     Returns  : a scalar
+     Args     : n/a
+     Notes    : if get listing has not yet been called, it will call get_listing to get state and county.
+                this method gets its data internally, and does not query the qrz xml server.
+
   login()
      Usage    : $session = $qrz->login;
      Function : initiates a login to the QRZ xml server
@@ -204,6 +216,9 @@ TODO
     *   Look into any possible needed escaping, filtering, etc.
 
 ACKNOWLEDGEMENTS
+    Thanks to Thomas Schaefer NY4I for the idea, original code, and data for
+    the ARRL Section additions!
+
     This module accesses data from the widely popular QRZ.COM Database. See
     http://www.qrz.com
 
