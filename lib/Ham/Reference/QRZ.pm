@@ -3,7 +3,7 @@ package Ham::Reference::QRZ;
 # --------------------------------------------------------------------------
 # Ham::Reference::QRZ - An interface to the QRZ XML Database Service
 #
-# Copyright (c) 2008-2010 Brad McConahay N8QQ.  All rights reserved.
+# Copyright (c) 2008-2010 Brad McConahay N8QQ.
 # Cincinnati, Ohio USA
 # --------------------------------------------------------------------------
 
@@ -973,6 +973,9 @@ Version 0.03
  my $arrl_section = $qrz->get_arrl_section;
  print "ARRL Section: $arrl_section\n";
 
+ # show biography details, if any
+ my $bio = $qrz->get_bio_file;
+ print "Biography: $bio\n";
 
 =head1 DESCRIPTION
 
@@ -1203,7 +1206,7 @@ Brad McConahay N8QQ, C<< <brad at n8qq.com> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2010 Brad McConahay N8QQ, all rights reserved.
+Copyright 2008-2010 Brad McConahay N8QQ.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
