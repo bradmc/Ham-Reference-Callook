@@ -562,7 +562,7 @@ sub _get_arrl_sections {
 			'Washington' => 'WPA',
 			'Westmoreland' => 'WPA'
 		},
-		'PE' => 'PE',
+		'PE' => 'MAR',
 		'PR' => 'PR',
 		'QC' => 'QC',
 		'RI' => 'RI',

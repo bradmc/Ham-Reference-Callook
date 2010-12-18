@@ -11,8 +11,9 @@ Revision history for Ham-Reference-QRZ
         - Added functionality and documentation for ARRL Sections.  (thanks to Thomas Schaefer NY4I)
         - Added functionality and documentation for the new DXCC data now available from the QRZ
           XML server.
-        - Improved login error checking, including changing XML server login errors to hard die errors,
-          rather than soft errors that would fail silently.
+        - Improved login error checking, including changing XML server login errors that are due to
+          missing module configuration to hard die errors, rather than soft errors that might fail
+          silently if not otherwise trapped.
         - Added example for retrieving session information to the synopsis.
         - Updated TODO in docs to include need for a better module license.
         - Updated POD and README with new reference links to QRZ.com.  Updated version number and
