@@ -135,6 +135,29 @@ sub get_bio
 	$self->{_bio} = $bio->{Bio};
 }
 
+sub get_dxcc
+{
+	my $self = shift;
+	return $self->{_dxcc} if $self->{_dxcc}->{call};
+	if (!$self->{_callsign}) {
+		$self->{is_error} = 1;
+		$self->{error_message} = "Can not get data without a callsign";
+		return undef;
+	}	
+	if (!$self->{_key}) {
+		$self->login;
+	}
+	my $url = "$qrz_url/bin/xml?s=$self->{_key};dxcc=$self->{_callsign}";
+	my $bio = $self->_get_xml($url);
+	if ($bio->{Session}->{Error}) {
+		$self->{is_error} = 1;
+		$self->{error_message} = $bio->{Session}->{Error};
+		return undef;
+	}
+	$self->{_session} = $bio->{Session};
+	$self->{_dxcc} = $bio->{DXCC};
+}
+
 sub get_session
 {
 	my $self = shift;
@@ -203,16 +226,17 @@ Version 0.03
    password => 'your_password'
  );
 
- # get the listing and bio
+ # get the listing, bio and other information
  my $listing = $qrz->get_listing;
  my $bio = $qrz->get_bio;
+ my $dxcc = $qrz->get_dxcc;
  my $session = $qrz->get_session;
 
  # dump the data to see how it's structured
  print Dumper($listing);
  print Dumper($bio);
+ print Dumper($dxcc);
  print Dumper($session);
-
 
  # set a different callsign to look up
  $qrz->set_callsign('W8IRC');
@@ -220,6 +244,11 @@ Version 0.03
  # get the listing and print some specific info
  $listing = $qrz->get_listing;
  print "Name: $listing->{name}\n";
+
+ # show some dxcc info
+ print "DXCC Continent: $dxcc->{continent}\n";
+ print "DXCC Name: $dxcc->{name}\n";
+ print "CQ Zone: $dxcc->{cqzone}\n";
 
  # show some session info
  print "Lookups in current 24 hour period: $session->{Count}\n";
@@ -240,7 +269,7 @@ without raising an error, so long as the information received consists of proper
 
 Therefore, this module will not attempt to list or manage individual elements of a callsign.  You
 will need to inspect the hash reference keys to see which elements are available for any given
-callsign.
+callsign, as demonstrated in the synopsis.
 
 This module does not handle any management of reusing session keys at this time.
 
@@ -320,7 +349,7 @@ This module does not handle any management of reusing session keys at this time.
  Args     : n/a
  Notes    : if a session key has not already been set, this method will automatically login.
             if a there is already listing information set from a previous lookup,
-            this will just return that data.  do a new set_callsign() if you need to refresh
+            this will just return that data.  call a new set_callsign() if you need to refresh
             the data with a new call to the qrz database.
 
 =head2 get_bio()
@@ -331,7 +360,18 @@ This module does not handle any management of reusing session keys at this time.
  Args     : n/a
  Notes    : if a session key has not already been set, this method will automatically login.
             if a there is already biographical information set from a previous lookup,
-            this will just return that data.  do a new set_callsign() if you need to refresh
+            this will just return that data.  call a new set_callsign() if you need to refresh
+            the data with a new call to the qrz database.
+
+=head2 get_dxcc()
+
+ Usage    : $hashref = $qrz->get_dxcc;
+ Function : retrieves DXCC information for a callsign from QRZ
+ Returns  : a hash reference
+ Args     : n/a
+ Notes    : if a session key has not already been set, this method will automatically login.
+            if a there is already dxcc information set from a previous lookup,
+            this will just return that data.  call a new set_callsign() if you need to refresh
             the data with a new call to the qrz database.
 
 =head2 login()

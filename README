@@ -15,13 +15,17 @@ SYNOPSIS
        password => 'your_password'
      );
 
-     # get the listing and bio
+     # get the listing, bio and other information
      my $listing = $qrz->get_listing;
      my $bio = $qrz->get_bio;
+     my $dxcc = $qrz->get_dxcc;
+     my $session = $qrz->get_session;
 
      # dump the data to see how it's structured
      print Dumper($listing);
      print Dumper($bio);
+     print Dumper($dxcc);
+     print Dumper($session);
 
      # set a different callsign to look up
      $qrz->set_callsign('W8IRC');
@@ -29,6 +33,15 @@ SYNOPSIS
      # get the listing and print some specific info
      $listing = $qrz->get_listing;
      print "Name: $listing->{name}\n";
+
+     # show some dxcc info
+     print "DXCC Continent: $dxcc->{continent}\n";
+     print "DXCC Name: $dxcc->{name}\n";
+     print "CQ Zone: $dxcc->{cqzone}\n";
+
+     # show some session info
+     print "Lookups in current 24 hour period: $session->{Count}\n";
+     print "QRZ subscription expiration: $session->{SubExp}\n";
 
 DESCRIPTION
     The "Ham::Reference::QRZ" module provides an easy object oriented front
@@ -48,7 +61,8 @@ DESCRIPTION
 
     Therefore, this module will not attempt to list or manage individual
     elements of a callsign. You will need to inspect the hash reference keys
-    to see which elements are available for any given callsign.
+    to see which elements are available for any given callsign, as
+    demonstrated in the synopsis.
 
     This module does not handle any management of reusing session keys at
     this time.
@@ -120,7 +134,7 @@ METHODS
      Args     : n/a
      Notes    : if a session key has not already been set, this method will automatically login.
                 if a there is already listing information set from a previous lookup,
-                this will just return that data.  do a new set_callsign() if you need to refresh
+                this will just return that data.  call a new set_callsign() if you need to refresh
                 the data with a new call to the qrz database.
 
   get_bio()
@@ -130,7 +144,17 @@ METHODS
      Args     : n/a
      Notes    : if a session key has not already been set, this method will automatically login.
                 if a there is already biographical information set from a previous lookup,
-                this will just return that data.  do a new set_callsign() if you need to refresh
+                this will just return that data.  call a new set_callsign() if you need to refresh
+                the data with a new call to the qrz database.
+
+  get_dxcc()
+     Usage    : $hashref = $qrz->get_dxcc;
+     Function : retrieves DXCC information for a callsign from QRZ
+     Returns  : a hash reference
+     Args     : n/a
+     Notes    : if a session key has not already been set, this method will automatically login.
+                if a there is already dxcc information set from a previous lookup,
+                this will just return that data.  call a new set_callsign() if you need to refresh
                 the data with a new call to the qrz database.
 
   login()
