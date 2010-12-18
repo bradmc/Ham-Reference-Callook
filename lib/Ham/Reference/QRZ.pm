@@ -1169,13 +1169,9 @@ This module does not handle any management of reusing session keys at this time.
 
 =over 4
 
-=item * Change to a more appropriate license for the module.
-
-=item * Improve error checking and handling.
-
 =item * Session key reuse between instances (maybe).
 
-=item * Look into any possible needed escaping, filtering, etc.
+=item * Look into any escaping or filtering of data that would be helpful, particularly with regard to get_bio_file().
 
 =back
 
@@ -1213,7 +1209,7 @@ modify it under the terms of the Artistic License 2.0. For
 details, see the full text of the license in the file LICENSE.
 
 This program is distributed in the hope that it will be
-useful, but it is provided “as is” and without any express
+useful, but it is provided "as is" and without any express
 or implied warranties. For details, see the full text of
 the license in the file LICENSE.
 

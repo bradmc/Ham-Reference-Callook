@@ -232,13 +232,10 @@ DEPENDENCIES
         Service
 
 TODO
-    *   Change to a more appropriate license for the module.
-
-    *   Improve error checking and handling.
-
     *   Session key reuse between instances (maybe).
 
-    *   Look into any possible needed escaping, filtering, etc.
+    *   Look into any escaping or filtering of data that would be helpful,
+        particularly with regard to get_bio_file().
 
 ACKNOWLEDGEMENTS
     Thanks to Thomas Schaefer NY4I for the idea, original code, and data for
@@ -265,6 +262,6 @@ COPYRIGHT AND LICENSE
     text of the license in the file LICENSE.
 
     This program is distributed in the hope that it will be useful, but it
-    is provided “as is” and without any express or implied warranties. For
+    is provided "as is" and without any express or implied warranties. For
     details, see the full text of the license in the file LICENSE.
 
