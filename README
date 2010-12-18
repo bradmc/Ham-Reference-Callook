@@ -171,6 +171,8 @@ DEPENDENCIES
         Service
 
 TODO
+    *   Change to a more appropriate license for the module.
+
     *   Improve error checking and handling.
 
     *   Session key reuse between instances (maybe).

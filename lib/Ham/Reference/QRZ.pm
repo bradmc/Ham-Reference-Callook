@@ -378,6 +378,8 @@ This module does not handle any management of reusing session keys at this time.
 
 =over 4
 
+=item * Change to a more appropriate license for the module.
+
 =item * Improve error checking and handling.
 
 =item * Session key reuse between instances (maybe).
