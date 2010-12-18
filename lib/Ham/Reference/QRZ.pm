@@ -15,7 +15,7 @@ use vars qw($VERSION);
 
 our $VERSION = '0.03';
 
-my $qrz_url = "http://online.qrz.com";
+my $qrz_url = "http://www.qrz.com/xml";
 my $site_name = 'QRZ XML Database Service';
 my $default_timeout = 10;
 
@@ -37,16 +37,14 @@ sub new
 sub login
 {
 	my $self = shift;
+	if (!$self->{_username}) { die "No QRZ subscription username given" }
+	if (!$self->{_password}) { die "No QRZ subscription password given" }
 	my $url = "$qrz_url/bin/xml?username=$self->{_username};password=$self->{_password};agent=$self->{_agent}";
 	my $login = $self->_get_xml($url);
 	if ($login->{Session}->{Error}) {
-		$self->{is_error} = 1;
-		$self->{error_message} = $login->{Session}->{Error};
-		return undef;
+		die $login->{Session}->{Error};
 	} elsif (!$login->{Session}->{Key}) {
-		$self->{is_error} = 1;
-		$self->{error_message} = "Unknown Error - Could not retrieve session key";
-		return undef;
+		die "Unknown Error - Could not retrieve session key";
 	} else {
 		$self->set_key($login->{Session}->{Key});
 		$self->{_session} = $login->{Session};
@@ -208,10 +206,13 @@ Version 0.03
  # get the listing and bio
  my $listing = $qrz->get_listing;
  my $bio = $qrz->get_bio;
+ my $session = $qrz->get_session;
 
  # dump the data to see how it's structured
  print Dumper($listing);
  print Dumper($bio);
+ print Dumper($session);
+
 
  # set a different callsign to look up
  $qrz->set_callsign('W8IRC');
@@ -219,6 +220,10 @@ Version 0.03
  # get the listing and print some specific info
  $listing = $qrz->get_listing;
  print "Name: $listing->{name}\n";
+
+ # show some session info
+ print "Lookups in current 24 hour period: $session->{Count}\n";
+ print "QRZ subscription expiration: $session->{SubExp}\n";
 
 =head1 DESCRIPTION
 
