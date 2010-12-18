@@ -7,6 +7,7 @@ WriteMakefile(
     AUTHOR              => 'Brad McConahay N8QQ <brad@n8qq.com>',
     VERSION_FROM        => 'lib/Ham/Reference/QRZ.pm',
     ABSTRACT_FROM       => 'lib/Ham/Reference/QRZ.pm',
+    LICENSE             => 'artistic2',
     PL_FILES            => {},
     PREREQ_PM => {
         'Test::More' => 0,
