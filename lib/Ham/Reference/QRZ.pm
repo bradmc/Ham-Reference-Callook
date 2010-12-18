@@ -11,6 +11,7 @@ use strict;
 use warnings;
 use XML::Simple;
 use LWP::UserAgent;
+use HTML::Entities;
 use vars qw($VERSION);
 
 our $VERSION = '0.03';
@@ -31,12 +32,14 @@ sub new
 	$self->set_username($args{username}) if $args{username};
 	$self->set_password($args{password}) if $args{password};
 	$self->set_key($args{key}) if $args{key};
+	$self->_clear_errors;
 	return $self;
 }
 
 sub login
 {
 	my $self = shift;
+	$self->_clear_errors;
 	if (!$self->{_username}) { die "No QRZ subscription username given" }
 	if (!$self->{_password}) { die "No QRZ subscription password given" }
 	my $url = "$qrz_url/bin/xml?username=$self->{_username};password=$self->{_password};agent=$self->{_agent}";
@@ -92,6 +95,7 @@ sub set_timeout
 sub get_listing
 {
 	my $self = shift;
+	$self->_clear_errors;
 	return $self->{_listing} if $self->{_listing}->{call};
 	if (!$self->{_callsign}) {
 		$self->{is_error} = 1;
@@ -115,6 +119,7 @@ sub get_listing
 sub get_bio
 {
 	my $self = shift;
+	$self->_clear_errors;
 	return $self->{_bio} if $self->{_bio}->{call};
 	if (!$self->{_callsign}) {
 		$self->{is_error} = 1;
@@ -135,9 +140,29 @@ sub get_bio
 	$self->{_bio} = $bio->{Bio};
 }
 
+sub get_bio_file
+{
+	my $self = shift;
+	$self->_clear_errors;
+	$self->get_bio if !$self->{_bio}->{call};
+	if (!$self->{_bio}->{bio}) {
+		$self->{is_error} = 1;
+		$self->{error_message} = 'No URL for bio file is available for this callsign';
+		return undef;		
+	}
+	my $url = "$self->{_bio}->{bio}";
+	my $content = $self->_get_http($url);
+	return undef if $self->{is_error};
+	$content =~ s/&nbsp;/ /g; # convert nbsp entity to regular printable spaces
+	$content = decode_entities($content);
+	$content =~ s/<.*?>//g; # strip html
+	return $content;
+}
+
 sub get_dxcc
 {
 	my $self = shift;
+	$self->_clear_errors;
 	return $self->{_dxcc} if $self->{_dxcc}->{call};
 	if (!$self->{_callsign}) {
 		$self->{is_error} = 1;
@@ -161,6 +186,7 @@ sub get_dxcc
 sub get_arrl_section
 {
 	my $self = shift;
+	$self->_clear_errors;
 	$self->get_listing if !$self->{_listing}->{callsign};
 	if (!$self->{_listing}->{state} or (!$self->{_listing}->{county} and $self->{_listing}->{country} ne 'Canada')) {
 		$self->{is_error} = 1;
@@ -198,7 +224,7 @@ sub _get_xml
 	my $self = shift;
 	my $url = shift;
 	my $content = $self->_get_http($url);
-	# return undef if $self->{is_error};
+	return undef if $self->{is_error};
 	chomp $content;
 	$content =~ s/(\r|\n)//g;
 
@@ -213,6 +239,7 @@ sub _get_http
 {
 	my $self = shift;
 	my $url = shift;
+	$self->_clear_errors;
 	my $ua = LWP::UserAgent->new( timeout=>$self->{_timeout} );
 	$ua->agent( $self->{_agent} );
 	my $request = HTTP::Request->new('GET', $url);
@@ -223,6 +250,13 @@ sub _get_http
 		return undef;
 	}
 	return $response->content;
+}
+
+sub _clear_errors
+{
+	my $self = shift;
+	$self->{is_error} = 0;
+	$self->{error_message} = '';
 }
 
 sub _get_arrl_sections {
@@ -1047,7 +1081,19 @@ This module does not handle any management of reusing session keys at this time.
  Notes    : if a session key has not already been set, this method will automatically login.
             if a there is already biographical information set from a previous lookup,
             this will just return that data.  call a new set_callsign() if you need to refresh
-            the data with a new call to the qrz database.
+            the data with a new call to the qrz database.  this method only retrieves the meta
+            information about the bio.  call get_bio_file to get the actual contents of the bio.
+
+=head2 get_bio_file()
+
+ Usage    : $scalar = $qrz->get_bio_file;
+ Function : retrieves the full biography of a callsign from QRZ, if any is available
+ Returns  : a scalar
+ Args     : n/a
+ Notes    : if the get_bio method has not been called yet, it will be called first to get
+            the url for the bio file.  any html entities in the contents of the bio will be
+            converted to plain text, and all html will be stripped.  hard line breaks will be
+            left in place.  suggestions are welcome on how this data might better be filtered.
 
 =head2 get_dxcc()
 
@@ -1107,6 +1153,8 @@ This module does not handle any management of reusing session keys at this time.
 =item * L<XML::Simple>
 
 =item * L<LWP::UserAgent>
+
+=item * L<HTML::Entities>
 
 =item * An Internet connection
 

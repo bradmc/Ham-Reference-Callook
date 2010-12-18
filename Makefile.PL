@@ -12,6 +12,7 @@ WriteMakefile(
         'Test::More' => 0,
         'XML::Simple' => 0,
         'LWP::UserAgent' => 0,
+        'HTML::Entities' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Ham-Reference-QRZ-*' },
