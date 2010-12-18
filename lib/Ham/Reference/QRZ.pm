@@ -197,6 +197,22 @@ sub _get_xml
 {
 	my $self = shift;
 	my $url = shift;
+	my $content = $self->_get_http($url);
+	# return undef if $self->{is_error};
+	chomp $content;
+	$content =~ s/(\r|\n)//g;
+
+	$content =~ s/iso8859-1/iso-8859-1/; # added to account for what appears to be an
+                                         # incorrect encoding declearation string, 2009-10-31 bam
+	my $xs = XML::Simple->new( SuppressEmpty => 0 );
+	my $data = $xs->XMLin($content);
+	return $data;
+}
+
+sub _get_http
+{
+	my $self = shift;
+	my $url = shift;
 	my $ua = LWP::UserAgent->new( timeout=>$self->{_timeout} );
 	$ua->agent( $self->{_agent} );
 	my $request = HTTP::Request->new('GET', $url);
@@ -206,16 +222,7 @@ sub _get_xml
 		$self->{error_message} = "Could not contact $site_name - ".HTTP::Status::status_message($response->code);
 		return undef;
 	}
-	my $content = $response->content;
-	chomp $content;
-	$content =~ s/(\r|\n)//g;
-
-	$content =~ s/iso8859-1/iso-8859-1/; # added to account for what appears to be an
-                                         # incorrect encoding declearation string, 2009-10-31 bam
-
-	my $xs = XML::Simple->new( SuppressEmpty => 0 );
-	my $data = $xs->XMLin($content);
-	return $data;
+	return $response->content;
 }
 
 sub _get_arrl_sections {
