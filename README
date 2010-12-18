@@ -1,19 +1,9 @@
-Ham-Reference-QRZ 0.02
-
 NAME
     Ham::Reference::QRZ - An object oriented front end for the QRZ.COM
     Amateur Radio callsign database
 
 VERSION
-    Version 0.02
-
-INSTALLATION
-    To install this module, run the following commands:
-
-    perl Makefile.PL
-    make
-    make test
-    make install
+    Version 0.03
 
 SYNOPSIS
      use Ham::Reference::QRZ;
@@ -64,7 +54,6 @@ DESCRIPTION
     this time.
 
 CONSTRUCTOR
-
   new()
      Usage    : my $qrz = Ham::Reference::QRZ->new;
      Function : creates a new Ham::Reference::QRZ object
@@ -90,7 +79,6 @@ CONSTRUCTOR
                                        useful if you are managing the reuse of your own keys
 
 METHODS
-
   set_callsign()
      Usage    : $qrz->set_callsign( $callsign );
      Function : set the callsign to look up at QRZ
@@ -173,16 +161,21 @@ METHODS
      Args     : n/a
 
 DEPENDENCIES
-    * XML::Simple
-    * LWP::UserAgent
-    * An Internet connection
-    * A QRZ.COM subscription that includes access to the QRZ XML Database
-      Service
+    *   XML::Simple
+
+    *   LWP::UserAgent
+
+    *   An Internet connection
+
+    *   A QRZ.COM subscription that includes access to the QRZ XML Database
+        Service
 
 TODO
-    * Improve error checking and handling.
-    * Session key reuse between instances (maybe).
-    * Look into any possible needed escaping, filtering, etc.
+    *   Improve error checking and handling.
+
+    *   Session key reuse between instances (maybe).
+
+    *   Look into any possible needed escaping, filtering, etc.
 
 ACKNOWLEDGEMENTS
     This module accesses data from the widely popular QRZ.COM Database. See
@@ -190,16 +183,16 @@ ACKNOWLEDGEMENTS
 
 SEE ALSO
     *   In order to use this module you need to have a subscription for the
-        QRZ XML Database Service. See http://online.qrz.com
+        QRZ XML Database Service. See http://www.qrz.com/XML/index.html
 
     *   The technical reference for the QRZ XML Database Service is at
-        http://online.qrz.com/specifications.html
+        http://www.qrz.com/XML/current_spec.html
 
 AUTHOR
     Brad McConahay N8QQ, "<brad at n8qq.com>"
 
 COPYRIGHT AND LICENSE
-    Copyright 2008-2009 Brad McConahay N8QQ, all rights reserved.
+    Copyright 2008-2010 Brad McConahay N8QQ, all rights reserved.
 
     This program is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

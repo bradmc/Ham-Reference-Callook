@@ -3,7 +3,7 @@ package Ham::Reference::QRZ;
 # --------------------------------------------------------------------------
 # Ham::Reference::QRZ - An interface to the QRZ XML Database Service
 #
-# Copyright (c) 2008-2009 Brad McConahay N8QQ.  All rights reserved.
+# Copyright (c) 2008-2010 Brad McConahay N8QQ.  All rights reserved.
 # Cincinnati, Ohio USA
 # --------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ use XML::Simple;
 use LWP::UserAgent;
 use vars qw($VERSION);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my $qrz_url = "http://online.qrz.com";
 my $site_name = 'QRZ XML Database Service';
@@ -192,7 +192,7 @@ Ham::Reference::QRZ - An object oriented front end for the QRZ.COM Amateur Radio
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 SYNOPSIS
 
@@ -397,11 +397,11 @@ This module accesses data from the widely popular QRZ.COM Database.  See http://
 =item
 
 In order to use this module you need to have a subscription for the QRZ XML Database Service.
-See http://online.qrz.com
+See http://www.qrz.com/XML/index.html
 
 =item
 
-The technical reference for the QRZ XML Database Service is at http://online.qrz.com/specifications.html
+The technical reference for the QRZ XML Database Service is at http://www.qrz.com/XML/current_spec.html
 
 =back
 
@@ -411,7 +411,7 @@ Brad McConahay N8QQ, C<< <brad at n8qq.com> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 Brad McConahay N8QQ, all rights reserved.
+Copyright 2008-2010 Brad McConahay N8QQ, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
