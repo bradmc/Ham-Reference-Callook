@@ -9,14 +9,18 @@ Revision history for Ham-Reference-QRZ
 
 0.03    2010-12-18 Sat
         - Added functionality and documentation for ARRL Sections.  (thanks to Thomas Schaefer NY4I)
+        - Changed license to Artistic 2.0, added LICENSE file to the distribution, and updated
+          documentation to match.
+        - Added routines and docs for getting the full bio contents with the get_bio_file method.
+        - Added HTML::Entities to dependencies.
+        - Added private method _clear_errors to clear error state before any routines that will
+          potentially change the error state.
         - Added functionality and documentation for the new DXCC data now available from the QRZ
           XML server.
-        - Improved login error checking, including changing XML server login errors that are due to
-          missing module configuration to hard die errors, rather than soft errors that might fail
-          silently if not otherwise trapped.
+        - Improved XML server login errors that are due to missing module configuration to use
+          hard die errors, rather than soft errors that might fail silently if not otherwise
+          trapped.
         - Added example for retrieving session information to the synopsis.
         - Updated TODO in docs to include need for a better module license.
-        - Updated POD and README with new reference links to QRZ.com.  Updated version number and
-          copyright year in documentation.
-
+        - Updated POD and README with new reference links to QRZ.com.
 

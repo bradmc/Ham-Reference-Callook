@@ -1206,8 +1206,14 @@ Brad McConahay N8QQ, C<< <brad at n8qq.com> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2010 Brad McConahay N8QQ.
+C<Ham::Reference::QRZ> is Copyright (C) 2008-2010 Brad McConahay N8QQ.
 
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This module is free software; you can redistribute it and/or
+modify it under the terms of the Artistic License 2.0. For
+details, see the full text of the license in the file LICENSE.
+
+This program is distributed in the hope that it will be
+useful, but it is provided “as is” and without any express
+or implied warranties. For details, see the full text of
+the license in the file LICENSE.
 

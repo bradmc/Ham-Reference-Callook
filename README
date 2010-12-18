@@ -5,6 +5,14 @@ NAME
 VERSION
     Version 0.03
 
+INSTALLATION
+    To install this module, run the following commands:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
 SYNOPSIS
      use Ham::Reference::QRZ;
      use Data::Dumper;
@@ -46,6 +54,10 @@ SYNOPSIS
      # show the ARRL section
      my $arrl_section = $qrz->get_arrl_section;
      print "ARRL Section: $arrl_section\n";
+
+     # show biography details, if any
+     my $bio = $qrz->get_bio_file;
+     print "Biography: $bio\n";
 
 DESCRIPTION
     The "Ham::Reference::QRZ" module provides an easy object oriented front
@@ -149,7 +161,18 @@ METHODS
      Notes    : if a session key has not already been set, this method will automatically login.
                 if a there is already biographical information set from a previous lookup,
                 this will just return that data.  call a new set_callsign() if you need to refresh
-                the data with a new call to the qrz database.
+                the data with a new call to the qrz database.  this method only retrieves the meta
+                information about the bio.  call get_bio_file to get the actual contents of the bio.
+
+  get_bio_file()
+     Usage    : $scalar = $qrz->get_bio_file;
+     Function : retrieves the full biography of a callsign from QRZ, if any is available
+     Returns  : a scalar
+     Args     : n/a
+     Notes    : if the get_bio method has not been called yet, it will be called first to get
+                the url for the bio file.  any html entities in the contents of the bio will be
+                converted to plain text, and all html will be stripped.  hard line breaks will be
+                left in place.  suggestions are welcome on how this data might better be filtered.
 
   get_dxcc()
      Usage    : $hashref = $qrz->get_dxcc;
@@ -201,6 +224,8 @@ DEPENDENCIES
 
     *   LWP::UserAgent
 
+    *   HTML::Entities
+
     *   An Internet connection
 
     *   A QRZ.COM subscription that includes access to the QRZ XML Database
@@ -233,8 +258,13 @@ AUTHOR
     Brad McConahay N8QQ, "<brad at n8qq.com>"
 
 COPYRIGHT AND LICENSE
-    Copyright 2008-2010 Brad McConahay N8QQ, all rights reserved.
+    "Ham::Reference::QRZ" is Copyright (C) 2008-2010 Brad McConahay N8QQ.
 
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+    This module is free software; you can redistribute it and/or modify it
+    under the terms of the Artistic License 2.0. For details, see the full
+    text of the license in the file LICENSE.
+
+    This program is distributed in the hope that it will be useful, but it
+    is provided “as is” and without any express or implied warranties. For
+    details, see the full text of the license in the file LICENSE.
 
