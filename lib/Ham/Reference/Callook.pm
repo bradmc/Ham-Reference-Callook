@@ -1,9 +1,9 @@
-package Ham::Reference::QRZ;
+package Ham::Reference::Callook;
 
 # --------------------------------------------------------------------------
-# Ham::Reference::QRZ - An interface to the QRZ XML Database Service
+# Ham::Reference::Callook - An interface to the Callook.info Database Service
 #
-# Copyright (c) 2008-2010 Brad McConahay N8QQ.
+# Copyright (c) 2010 Brad McConahay N8QQ.
 # Cincinnati, Ohio USA
 # --------------------------------------------------------------------------
 
@@ -14,10 +14,10 @@ use LWP::UserAgent;
 use HTML::Entities;
 use vars qw($VERSION);
 
-our $VERSION = '0.03';
+our $VERSION = '0.01';
 
-my $qrz_url = "http://www.qrz.com/xml";
-my $site_name = 'QRZ XML Database Service';
+my $callook_url = "";
+my $site_name = 'Callook.info Site';
 my $default_timeout = 10;
 
 sub new
@@ -42,7 +42,7 @@ sub login
 	$self->_clear_errors;
 	if (!$self->{_username}) { die "No QRZ subscription username given" }
 	if (!$self->{_password}) { die "No QRZ subscription password given" }
-	my $url = "$qrz_url/bin/xml?username=$self->{_username};password=$self->{_password};agent=$self->{_agent}";
+	my $url = "$callook_url/bin/xml?username=$self->{_username};password=$self->{_password};agent=$self->{_agent}";
 	my $login = $self->_get_xml($url);
 	if ($login->{Session}->{Error}) {
 		die $login->{Session}->{Error};
@@ -105,7 +105,7 @@ sub get_listing
 	if (!$self->{_key}) {
 		$self->login;
 	}
-	my $url = "$qrz_url/bin/xml?s=$self->{_key};callsign=$self->{_callsign}";
+	my $url = "$callook_url/bin/xml?s=$self->{_key};callsign=$self->{_callsign}";
 	my $listing = $self->_get_xml($url);
 	if ($listing->{Session}->{Error}) {
 		$self->{is_error} = 1;
@@ -129,7 +129,7 @@ sub get_bio
 	if (!$self->{_key}) {
 		$self->login;
 	}
-	my $url = "$qrz_url/bin/xml?s=$self->{_key};bio=$self->{_callsign}";
+	my $url = "$callook_url/bin/xml?s=$self->{_key};bio=$self->{_callsign}";
 	my $bio = $self->_get_xml($url);
 	if ($bio->{Session}->{Error}) {
 		$self->{is_error} = 1;
@@ -172,7 +172,7 @@ sub get_dxcc
 	if (!$self->{_key}) {
 		$self->login;
 	}
-	my $url = "$qrz_url/bin/xml?s=$self->{_key};dxcc=$self->{_callsign}";
+	my $url = "$callook_url/bin/xml?s=$self->{_key};dxcc=$self->{_callsign}";
 	my $bio = $self->_get_xml($url);
 	if ($bio->{Session}->{Error}) {
 		$self->{is_error} = 1;
