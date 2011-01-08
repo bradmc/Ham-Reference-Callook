@@ -3,7 +3,7 @@ LICENSE
 MANIFEST
 Makefile.PL
 README
-lib/Ham/Reference/QRZ.pm
+lib/Ham/Reference/Callook.pm
 t/00-load.t
 t/pod-coverage.t
 t/pod.t

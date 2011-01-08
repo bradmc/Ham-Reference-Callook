@@ -244,13 +244,7 @@ This module accesses data from the Callook.info site provided by Joshua Dick, W1
 
 =head1 SEE ALSO
 
-=over 4
-
-=item
-
 For more information about the data provided by Callook.info, see the API reference at http://callook.info/api_reference.php
-
-=back
 
 =head1 AUTHOR
 
