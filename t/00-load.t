@@ -3,7 +3,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-	use_ok( 'Ham::Reference::QRZ' );
+	use_ok( 'Ham::Reference::Callook' );
 }
 
-diag( "Testing Ham::Reference::QRZ $Ham::Reference::QRZ::VERSION, Perl $], $^X" );
+diag( "Testing Ham::Reference::Callook $Ham::Reference::Callook::VERSION, Perl $], $^X" );
