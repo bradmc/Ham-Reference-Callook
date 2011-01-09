@@ -3,7 +3,7 @@ package Ham::Reference::Callook;
 # --------------------------------------------------------------------------
 # Ham::Reference::Callook - An interface to the Callook.info Database Service
 #
-# Copyright (c) 2010 Brad McConahay N8QQ.
+# Copyright (c) 2010-2011 Brad McConahay N8QQ.
 # Cincinnati, Ohio USA
 # --------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ use XML::Simple;
 use LWP::UserAgent;
 use vars qw($VERSION);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $callook_url = "http://callook.info/";
 my $site_name = 'Callook.info';
@@ -133,20 +133,20 @@ Ham::Reference::Callook - An object oriented front end for the Callook.info call
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
  use Ham::Reference::Callook;
-
- # create new callook object and get the listing data for a callsign
  my $callook = Ham::Reference::Callook->new;
+
+ # get the listing data for a callsign
  my $listing = $callook->listing('N8QQ');
 
- # print the name
+ # print some info
  print "Name: $listing->{name}\n";
 
- # examine the entire hashref of data
+ # examine the entire hashref of callsign data
  use Data::Dumper;
  print Dumper($listing);
 
@@ -190,19 +190,31 @@ reference keys to see which elements are available for any given callsign, as de
 
 =head1 METHODS
 
-=head2 timeout()
-
- Usage    : $callook->timeout($seconds);
- Function : sets the number of seconds to wait on the API server before timing out
- Returns  : n/a
- Args     : an integer
-
 =head2 listing()
 
  Usage    : $hashref = $callook->listing($callsign) - OR - $scalar = $callook->listing($callsign}
  Function : retrieves data for the standard listing of a callsign from Callook.info
  Returns  : a hash reference if type is 'xml' (the default), or a scalar if type is 'text'
  Args     : a scalar (the callsign)
+
+=head2 type()
+
+ Usage    : $callook->type($type}
+ Function : sets the type of structure to retrieve when using the listing() method to get data 
+ Returns  : n/a
+ Args     : a scalar ('xml' or 'text')
+ Notes    : 'xml' will cause the listing to be returned as a hash reference with a structure that
+              matches the XML returned from the Callook.info API.
+            'text' will cause the listing to be returned as a single complete block of text in a
+              scalar reference.
+            defaults to 'xml'
+
+=head2 timeout()
+
+ Usage    : $callook->timeout($seconds);
+ Function : sets the number of seconds to wait on the API server before timing out
+ Returns  : n/a
+ Args     : an integer
 
 =head2 is_error()
 
@@ -235,6 +247,8 @@ reference keys to see which elements are available for any given callsign, as de
 =over 4
 
 =item * Add ARRL section info.
+
+=item * Improve this documentation.
 
 =back
 
